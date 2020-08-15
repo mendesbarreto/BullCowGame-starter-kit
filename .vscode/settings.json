@@ -1,0 +1,13 @@
+{
+	"files.exclude": {
+		"/Users/douglasmendes/Git/UE4/BullCowGame-starter-kit/.git": true,
+		"/Users/douglasmendes/Git/UE4/BullCowGame-starter-kit/.idea": true,
+		"/Users/douglasmendes/Git/UE4/BullCowGame-starter-kit/.vscode": true,
+		"/Users/douglasmendes/Git/UE4/BullCowGame-starter-kit/BullCowGame.xcworkspace": true,
+		"/Users/douglasmendes/Git/UE4/BullCowGame-starter-kit/Content": true,
+		"/Users/douglasmendes/Git/UE4/BullCowGame-starter-kit/DerivedDataCache": true,
+		"/Users/douglasmendes/Git/UE4/BullCowGame-starter-kit/Intermediate": true,
+		"/Users/douglasmendes/Git/UE4/BullCowGame-starter-kit/Saved": true,
+		"/Users/douglasmendes/Git/UE4/BullCowGame-starter-kit/cmake-build-debug": true
+	}
+}
