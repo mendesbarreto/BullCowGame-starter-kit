@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "BullCowCartridge.h"
+#include "BullCowGame.h"
 
 // This will start when the game starts
 void UBullCowCartridge::BeginPlay()
@@ -23,30 +24,48 @@ void UBullCowCartridge::OnInput(const FString& Input)
         this->ClearScreen();
         this->SetupGame();
     }else {
-        if(Input.ToLower() == m_hiddenWord.ToLower()) {
-            PrintLine(TEXT("I did it"));
+        this->ProcessGuess(Input, this->m_lives);
+    }
+}
+
+void UBullCowCartridge::ProcessGuess(FString Guess, int32 Counter) {
+    if(Guess.ToLower() == m_hiddenWord.ToLower()) {
+        PrintLine(TEXT("You won the game"));
+        this->EndGame();
+    } else {
+        PrintLine(TEXT("BOOM You are wrong!"));
+        auto inputLen = Guess.Len();
+        auto hiddenWorld = this->m_hiddenWord.Len();
+
+        if(!this->IsIsogram(Guess)) {
+            PrintLine(TEXT("No repeating letters, guess again!"));
+            return;
+        }
+
+        if(inputLen > hiddenWorld) {
+            PrintLine(TEXT("The hidden world has less chars"));
+        } else if (inputLen < hiddenWorld) {
+            PrintLine(TEXT("The hidden world has more chars"));
+        }
+
+        --this->m_lives;
+
+        PrintLine(TEXT("The number of lines you have is %i "), this->m_lives);
+
+        if (this->m_lives <= 0) {
             this->EndGame();
-        } else {
-            PrintLine(TEXT("BOOM You are wrong!"));
-            auto inputLen = Input.Len();
-            auto hiddenWorld = this->m_hiddenWord.Len();
-
-            if(inputLen > hiddenWorld) {
-                PrintLine(TEXT("The hidden world has less chars"));
-            } else if (inputLen < hiddenWorld) {
-                PrintLine(TEXT("The hidden world has more chars"));
-            }
-
-            --this->m_lives;
-
-            PrintLine(TEXT("The number of lines you have is %i "), this->m_lives);
-
-            if (this->m_lives <= 0) {
-                this->EndGame();
-            }
+        }
+    }
+}
+bool UBullCowCartridge::IsIsogram(FString word) const {
+    for(int32 index = 0, comparison = index + 1; comparison < word.Len(); comparison++) {
+        if(word[index] == word[comparison]) {
+            UE_LOG(LogTemp, Warning, TEXT("the char is: %s"), &word[index]);
+            return false;
         }
     }
 
+    return true;
 }
 
 void UBullCowCartridge::SetupGame() {
